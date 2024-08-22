@@ -1,0 +1,15 @@
+---
+- name: Install Redis
+  hosts: all
+  vars:
+    redis_port: 6379
+    redis_databases: 1
+  tasks:
+
+    - name: Ensure Redis is present
+      apt: pkg=redis-server state=latest
+      sudo: true
+
+    - name: Ensure Redis is started
+      service: name=redis-server state=started enabled=yes
+      sudo: true
