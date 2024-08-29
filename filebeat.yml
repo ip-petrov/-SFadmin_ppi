@@ -1,0 +1,10 @@
+---
+- name: install filebeat
+  hosts: web
+  become: yes
+
+  tasks:
+  - name: install filebeat 
+    apt: name=filebeat  state=latest 
+  - name: start service
+    service: name=filebeat state=started enabled=yes

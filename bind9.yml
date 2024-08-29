@@ -1,0 +1,10 @@
+---
+- name: install bind9
+  hosts: web
+  become: yes
+
+  tasks:
+  - name: install bind9  
+    apt: name=bind9  state=latest
+  - name: start service
+    service: name=bind9 state=started enabled=yes	

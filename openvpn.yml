@@ -1,0 +1,27 @@
+---
+- name: install openvpn
+  hosts: web, log
+  become: yes
+  
+  vars:
+    src_file_for_web: /etc/ansible/common/files/openvpn/web-server.conf 
+    src_file_for_log: /etc/ansible/common/files/openvpn/log-server.conf
+    dst_file: /etc/openvpn/client.conf
+
+  tasks: 
+  - name: ckeck linux version
+    debug: var=ansible_distribution
+  
+  - name: install openvpn  ubuntu
+    apt: name=openvpn state=latest    
+    when: ansible_distribution == "Ubuntu"
+  - name: install openvpn centos 
+    yum: name=openvpn state=latest
+    when: ansible_distribution == "CentOS"
+
+  - name: opy conf file in directory for ubuntu
+    copy: src={{src_file_for_web}} dest={{dst_file}} mode=0770
+    when: ansible_distribution == "Ubuntu"
+  - name: copy conf file in directory for centos
+    copy: src={{src_file_for_log}} dest={{dst_file}} mode=0770
+    when: ansible_distribution == "CentOS"

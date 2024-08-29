@@ -1,0 +1,17 @@
+---
+- name: install mail
+  hosts: web
+  become: yes
+
+  tasks:
+  - name: install  postfix
+    apt: name=postfix  state=latest
+  - name: start service
+    service: name=postfix state=started enabled=yes
+  - name: install dovecot-imapd
+    apt: name=dovecot-imapd  state=latest
+  - name: install dovecot-pop3d
+    apt: name=dovecot-pop3d state=latest
+  - name: install roundcube
+    apt: name=roundcube  state=latest
+

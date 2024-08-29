@@ -1,0 +1,19 @@
+---
+- name: install elk stack
+  hosts: log
+  become: yes
+
+  tasks:
+  - name: install elasticsearch 
+    apt: name=elasticsearch  state=latest
+  - name: start service
+    service: name=elasticsearch state=started enabled=yes
+  - name: install kibana
+    apt: name=kibana  state=latest
+  - name: start service
+    service: name=kibana state=started enabled=yes
+  - name: install filebeat
+    apt: name=filebeat  state=latest
+  - name: start service
+    service: name=filebeat state=started enabled=yes
+
